@@ -70,22 +70,57 @@ if (all(i > 0, for_fn(i, 1, 11)))
 ### Array Utilities
 
 - **Array Length**: `arrlen` for getting the length of an array.
+```c
+int arr[] = {1, 2, 3, 4, 5};
+printf("Array length: %lu\n", arrlen(arr)); // Array length: 5
+```
 - **Array Builder**: `array` for creating arrays in a block scope.
+```c
+array(int, 1, 2, 3, 4, 5) my_arr;
+```
 
 ### Pointer Utilities
 
 - **Pointer Creation**: `ptr`, `pinit` for creating and initializing pointers.
+```c
+int *p = ptr(10);
+printf("%d\n", *p); // 10
+free(p);
+```
 - **Pointer Array Length**: `pptrlen` for computing the length of a pointer array.
+```c
+int *pptr[] = {ptr(1), ptr(2), ptr(3), NULL};
+printf("Pointer array length: %u\n", pptrlen(pptr)); // Pointer array length: 3
+for_n(i, pptrlen(pptr)) free(pptr[i]);
+```
 
 ### Random Number Generation
 
 - **Random Integers**: `randint` for generating random integers within a range.
+```c
+int r = randint(1, 100);
+printf("Random integer: %d\n", r);
+```
 - **Random Floats**: `randf` for generating random floating-point numbers within a range.
+```c
+float f = randf(1.0, 10.0);
+printf("Random float: %f\n", f);
+```
 
 ### String Manipulation
 
 - **String Concatenation**: `concat` for concatenating two strings.
+```c
+char *str = concat("Hello, ", "world!");
+printf("%s\n", str); // Hello, world!
+free(str);
+```
 - **String Joining**: `join` for joining multiple strings with a specified separator.
+```c
+char *joined = join("-", "foo", "bar", "baz");
+printf("%s\n", joined); // foo-bar-baz
+free(joined);
+```
 
 ## Usage
 
