@@ -40,7 +40,7 @@ typedef long long large;
 // Use lambda after disabling the error squiggles
 // #define lambda(tp, ...) ({ tp lambda __VA_ARGS__; lambda; })
 
-#define next(tp, ele, func, _default) ({ func (ele); (_default); })
+#define next(tp, ele, func, _default) ({ tp tp##__i = _default; func { tp tp##__e = ele; if (tp##__e) { tp##__i = tp##__e; break; } tp##__i; })
 #define sum(tp, ele, func) ({ tp e = 0; func e += ele; e; })
 #define product(tp, ele, func) ({ tp e = 1; func e *= ele; e; })
 
