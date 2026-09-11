@@ -56,13 +56,14 @@ typedef long long large;
 #define ptr(val) ({ __typeof__(val) *_p = malloc(sizeof(val)); *_p = val; _p; })
 #define pinit(var, val) free(var), var = ptr(val)
 
-uint pptrlen(const void **pptr) { return next(
+static uint pptrlen(const void **pptr) { return next(
     uint, i, for (uint i = 0; pptr[i]; ++i), 0); }
 #define pptrlen(pptr) (pptrlen((const void **)pptr))
 
-void **make_pptr(const uchar ele_size, const uint num_of_ele)
+static void **make_pptr(const uchar ele_size, const uint num_of_ele)
 {
-  void **pptr = malloc(8 * num_of_ele + 8);
+  void **pptr = malloc(sizeof(void *) * num_of_ele + sizeof(void *));
+
   for_n(num_of_ele, i) pptr[i] = malloc(ele_size);
   pptr[num_of_ele] = NULL;
   return pptr;
@@ -76,19 +77,19 @@ void **make_pptr(const uchar ele_size, const uint num_of_ele)
 /// @param str is the right string.
 /// @param _ppend is the left string or the new appended string.
 /// @return The concatenate result of both strings.
-char *concat(const char *str, const char *_ppend)
+static char *concat(const char *str, const char *_ppend)
 {
   uint _strlen = strlen(str), _ppendlen = strlen(_ppend);
-  char *newstr = nalloc(char, _strlen + _ppendlen);
+  char *newstr = nalloc(char, _strlen + _ppendlen + 1);
   strcpy(newstr, str), strcat(newstr, _ppend);
   return newstr;
 }
-char *join(char *str, ...)
+static char *join(char *str, ...)
 {
   va_list args;
   va_start(args, str);
   char *joiner = str, *next_str = va_arg(args, char *);
-  char *joined = nalloc(char, strlen(next_str));
+  char *joined = nalloc(char, strlen(next_str) + 1);
   strcpy(joined, next_str), next_str = va_arg(args, char *);
   while (next_str)
   {
